@@ -1,26 +1,31 @@
+#define d_time 7// dialogid
+#define on_time 1// time active
+
 //----- CMD
 CMD:time( playerid, params[] ) //if zcmd
 { 
+    new strng [90];
     gettime( ghour,gminute,gsecond );
-    format( string, 90, "Time: %d : %d : %d",ghour, gminute, gsecond ), ShowPlayerDialog( playerid, 1, DIALOG_STYLE_MSGBOX, "Time", string, "ok", "" ); 
-    return SetPVarInt( playerid, "TIMES", 1 ); 
+    format( string, 90, "Time: %d : %d : %d",ghour, gminute, gsecond ), ShowPlayerDialog( playerid, d_time, DIALOG_STYLE_MSGBOX, "Time", string, "x", "" ); 
+    return SetPVarInt( playerid, "TIMES", on_time ); 
 }
- 
-CMD:time( playerid, params[] ) //if standard processor
-{ 
+
+if(!strcmp(cmd,"/time",true))
+{
     gettime( ghour,gminute,gsecond );
-    format( string, 90, "Time: %d : %d : %d",ghour, gminute, gsecond ), ShowPlayerDialog( playerid, 1, DIALOG_STYLE_MSGBOX, "Time", string, "ok", "" ); 
-    return SetPVarInt( playerid, "TIMES", 1 ); 
+    new strng [90];
+    format( string, 90, "Time: %d : %d : %d",ghour, gminute, gsecond ), ShowPlayerDialog( playerid, d_time, DIALOG_STYLE_MSGBOX, "Time", string, "x", "" ); 
+    return SetPVarInt( playerid, "TIMES", on_time ); 
 }
 //-----One second timer
-if(GetPVarInt( playerid, "TIMES" ) == 1)
+if(GetPVarInt( playerid, "TIMES" ) == on_time)
 { 
     gettime( ghour, gminute, gsecond );
-    format( string, 190, "Time: %d : %d : %d", ghour, gminute, gsecond ), ShowPlayerDialog( playerid, 1, DIALOG_STYLE_MSGBOX, "Time", string, "ok", "" );
+    format( string, 190, "Time: %d : %d : %d", ghour, gminute, gsecond ), ShowPlayerDialog( playerid, d_time, DIALOG_STYLE_MSGBOX, "Time", string, "x", "" );
 }
 //----OnDialogResponse
 public OnDialogResponse( playerid, dialogid, response, listitem, inputtext[] ) 
 { 
-    if( dialogid == 1 ) return DeletePVar( playerid, "TIMES" );
+    if( dialogid == d_time ) return DeletePVar( playerid, "TIMES" );
     return 1; 
 }
